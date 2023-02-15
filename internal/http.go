@@ -28,13 +28,13 @@ func (httpa *MutexMapHTTPAdapter) GetMutexMap(w http.ResponseWriter, r *http.Req
 	fmt.Fprintf(w, "Key: %s Value: %s.", key, value)
 }
 
-func (httpa *MutexMapHTTPAdapter) setupRoutes() {
+func (httpa *MutexMapHTTPAdapter) StartApp() {
+	fmt.Println("HTTP Server Started on port 4000")
 	http.HandleFunc("/get", httpa.GetMutexMap)
 	http.HandleFunc("/set", httpa.SetMutexMap)
+	http.ListenAndServe(":4000", nil)
 }
 
-func NewApplication(httpa MutexMapHTTPAdapter) {
-	fmt.Println("HTTP Server Started on port 4000")
-	httpa.setupRoutes()
-	http.ListenAndServe(":4000", nil)
+func NewApplication(mutexMap MutexMapPort) *MutexMapHTTPAdapter {
+	return &MutexMapHTTPAdapter{mutexMap: mutexMap}
 }

@@ -7,6 +7,10 @@ import (
 func main() {
 	mutexMap := internal.NewMutexMap()
 
-	httpa := &internal.MutexMapHTTPAdapter{mutexMap: mutexMap}
-	internal.NewApplication(*httpa)
+	httpa := internal.NewApplication(mutexMap)
+	go httpa.StartApp()
+	grpc := makeServer(mutexMap)
+	grpc.startgRPCServer()
+	//gRPC server
+	//memcached whatever
 }

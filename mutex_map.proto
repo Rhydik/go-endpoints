@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package internal;
+
+option go_package = "/main";
+
+// The greeting service definition.
+service MutexMap {
+  // Sends a greeting
+  rpc GetMutexMap (KeyRequest) returns (ValueReply) {}
+  rpc SetMutexMap (KeyRequest) returns (Empty) {}
+}
+
+// The request message containing the user's name.
+message KeyRequest {
+  string key = 1;
+  string value = 2;
+}
+
+// The response message containing the greetings
+message ValueReply {
+  string value = 1;
+}
+
+message Empty {
+
+}
