@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.21.12
-// source: mutex_map.proto
+// source: internal/proto/mutex_map.proto
 
-package main
+package proto
 
 import (
 	context "context"
@@ -37,7 +37,7 @@ func NewMutexMapClient(cc grpc.ClientConnInterface) MutexMapClient {
 
 func (c *mutexMapClient) GetMutexMap(ctx context.Context, in *KeyRequest, opts ...grpc.CallOption) (*ValueReply, error) {
 	out := new(ValueReply)
-	err := c.cc.Invoke(ctx, "/internal.MutexMap/GetMutexMap", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.MutexMap/GetMutexMap", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *mutexMapClient) GetMutexMap(ctx context.Context, in *KeyRequest, opts .
 
 func (c *mutexMapClient) SetMutexMap(ctx context.Context, in *KeyRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/internal.MutexMap/SetMutexMap", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/proto.MutexMap/SetMutexMap", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func _MutexMap_GetMutexMap_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/internal.MutexMap/GetMutexMap",
+		FullMethod: "/proto.MutexMap/GetMutexMap",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MutexMapServer).GetMutexMap(ctx, req.(*KeyRequest))
@@ -114,7 +114,7 @@ func _MutexMap_SetMutexMap_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/internal.MutexMap/SetMutexMap",
+		FullMethod: "/proto.MutexMap/SetMutexMap",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MutexMapServer).SetMutexMap(ctx, req.(*KeyRequest))
@@ -126,7 +126,7 @@ func _MutexMap_SetMutexMap_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var MutexMap_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "internal.MutexMap",
+	ServiceName: "proto.MutexMap",
 	HandlerType: (*MutexMapServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -139,5 +139,5 @@ var MutexMap_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "mutex_map.proto",
+	Metadata: "internal/proto/mutex_map.proto",
 }

@@ -1,12 +1,13 @@
-package internal
+package http
 
 import (
 	"fmt"
 	"net/http"
+	"einride_test/internal"
 )
 
 type MutexMapHTTPAdapter struct {
-	mutexMap MutexMapPort
+	mutexMap internal.MutexMapPort
 }
 
 func (httpa *MutexMapHTTPAdapter) SetMutexMap(w http.ResponseWriter, r *http.Request) {
@@ -35,6 +36,6 @@ func (httpa *MutexMapHTTPAdapter) StartApp() {
 	http.ListenAndServe(":4000", nil)
 }
 
-func NewApplication(mutexMap MutexMapPort) *MutexMapHTTPAdapter {
+func NewApplication(mutexMap internal.MutexMapPort) *MutexMapHTTPAdapter {
 	return &MutexMapHTTPAdapter{mutexMap: mutexMap}
 }

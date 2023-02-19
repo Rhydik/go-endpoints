@@ -1,4 +1,4 @@
-package main
+package proto
 
 import (
 	"context"
@@ -33,11 +33,11 @@ func (s *server) SetMutexMap(ctx context.Context, in *KeyRequest) (*Empty, error
 
 func (s *server) mustEmbedUnimplementedMutexMapServer() {}
 
-func makeServer(mutexMap internal.MutexMapPort) *server {
+func MakegRPCServer(mutexMap internal.MutexMapPort) *server {
 	return &server{mutexMap: mutexMap}
 }
 
-func (s *server) startgRPCServer() {
+func (s *server) StartgRPCServer() {
 	lis, err := net.Listen("tcp", ":4001")
 	if err != nil {
 		panic(err)
