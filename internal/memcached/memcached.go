@@ -12,11 +12,16 @@ type MutexMapMemcachedAdapter struct {
 }
 
 func (m *MutexMapMemcachedAdapter) Get(key string) string {
+	_, ok := m.mutexMap.GetMutexMap(key)
+	if ok {
+		return "get " + key + "\r\n"
+	}
 
-	return "get " + key + "\r\n"
+	return ""
 }
 
 func (m *MutexMapMemcachedAdapter) Set(key string, value string) string {
+	m.mutexMap.SetMutexMap(key, []string{value})
 	return "set " + key + " 0 0 " + fmt.Sprint((len(value))) + "\r\n" + value + "\r\n"
 }
 
@@ -32,14 +37,14 @@ func (m *MutexMapMemcachedAdapter) handleRequests(conn net.Conn, request string)
 }
 
 func (m *MutexMapMemcachedAdapter) Listen() {
-	conn, err := net.Dial("tcp", "localhost:11211")
+	listener, err := net.Dial("tcp", "host.docker.internal:11211")
 
 	if err != nil {
 		panic(err)
 	}
-	defer conn.Close()
+	defer listener.Close()
 	println("Connected to memcached server")
 
-	m.handleRequests(conn, m.Set("key", "value"))
-	m.handleRequests(conn, m.Get("key"))
+	m.handleRequests(listener, m.Set("key", "value"))
+	m.handleRequests(listener, m.Get("key"))
 }

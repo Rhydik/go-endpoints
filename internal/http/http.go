@@ -1,9 +1,9 @@
 package http
 
 import (
+	"einride_test/internal"
 	"fmt"
 	"net/http"
-	"einride_test/internal"
 )
 
 type MutexMapHTTPAdapter struct {
@@ -33,7 +33,7 @@ func (httpa *MutexMapHTTPAdapter) StartApp() {
 	fmt.Println("HTTP Server Started on port 4000")
 	http.HandleFunc("/get", httpa.GetMutexMap)
 	http.HandleFunc("/set", httpa.SetMutexMap)
-	http.ListenAndServe(":4000", nil)
+	http.ListenAndServe("0.0.0.0:4000", nil)
 }
 
 func NewApplication(mutexMap internal.MutexMapPort) *MutexMapHTTPAdapter {
