@@ -1,7 +1,7 @@
 package main
 
 import (
-	"einride_test/internal"
+	"einride_test/internal/core"
 	"einride_test/internal/http"
 	"einride_test/internal/memcached"
 	"einride_test/internal/proto"
@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	mutexMap := internal.NewMutexMap()
+	mutexMap := core.NewMutexMap()
 	httpa := http.NewApplication(mutexMap)
 	grpc := proto.MakegRPCServer(mutexMap)
 	memcached := memcached.NewApplication(mutexMap)
